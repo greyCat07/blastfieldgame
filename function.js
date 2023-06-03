@@ -263,7 +263,7 @@ return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 
   // Function to randomly place bombs on the board
   function placeBombs() {
-    const totalBombs = Math.floor(BOARD_SIZE * BOARD_SIZE * 0.15); // Adjust the bomb density as needed
+    const totalBombs = Math.floor(BOARD_SIZE * BOARD_SIZE * 0.50); // Adjust the bomb density as needed
     let bombsPlaced = 0;
 
     while (bombsPlaced < totalBombs) {
