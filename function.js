@@ -1,128 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>BLAST FIELD</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      color: #ffffff;
-      text-align: center;
-      background-image: url('backgroudblast.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    
-    h1 {
-      color: #ffffff;
-    }
-    
-    .button {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 18px;
-      text-align: center;
-      text-decoration: none;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    
-    .button:hover {
-      background-color: #45a049;
-    }
-    
-    .board-container {
-      display: flex;
-      justify-content: center;
-    }
-    
-    .player-board {
-      margin: 20px;
-      display: none;
-      position: relative;
-    }
-    
-    .player-label {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    
-    .timer {
-      font-size: 16px;
-      margin-bottom: 5px;
-      position: absolute;
-      left: 10px;
-      text-align: left;
-    }
-    
-    .hearts {
-      font-size: 18px;
-      position: absolute;
-      right: 10px;
-      text-align: right;
-      color: red;
-    }
-    
-    .board-row {
-      display: flex;
-    }
-    
-    .board-cell {
-      width: 50px;
-      height: 50px;
-      border: 1px solid #ffffff;
-      margin: 2px;
-      background-color: #fff;
-    }
-    
-    .board-info {
-      margin-top: 10px;
-    }
-    
-    .start-cell {
-      background-image: url('player.png');
-      background-size: cover;
-    }
-    
-    .flag-cell {
-      background-image: url('flag.png');
-      background-size: cover;
+let gameStarted = false;
+let currentPlayer = 1;
+let remainingLives = [0, 3]; // Index 0 is unused
+
+document.getElementById('singlePlayerBtn').addEventListener('click', startGame);
+
+function startGame() {
+  gameStarted = true;
+  currentPlayer = 1;
+  updatePlayerBoardVisibility();
+  const player1TimerElement = document.getElementById('player1Timer');
+  const player1Timer = createTimer(player1TimerElement);
+  player1Timer.start();
+}
+
+function updatePlayerBoardVisibility() {
+  const playerBoard = document.querySelector('.player-board');
+  if (gameStarted) {
+    playerBoard.style.display = 'block';
+  } else {
+    playerBoard.style.display = 'none';
+  }
+}
+
+function createTimer(element) {
+  let startTime = Date.now();
+
+  function update() {
+    const elapsedTime = Date.now() - startTime;
+    const seconds = Math.floor(elapsedTime / 1000);
+    element.textContent = `Time: ${seconds}s`;
+
+    if (seconds >= 10) {
+      gameStarted = false;
+      currentPlayer = 1;
+      showTimeUpMessage();
+      updatePlayerBoardVisibility();
+      resetPlayerTimer(element);
+      restartGame();
+      return;
     }
 
-    .bomb-cell {
-      background-image: url('bomb.png');
-      background-size: cover;
+    if (remainingLives[currentPlayer] <= 0) {
+      gameStarted = false;
+      showGameOverMessage();
+      updatePlayerBoardVisibility();
+      resetPlayerTimer(element);
+      restartGame();
+      return;
     }
+  }
 
-    .exit-button {
-      display: none;
+  const timer = {
+    start() {
+      startTime = Date.now();
+      update();
+      this.intervalId = setInterval(update, 1000);
+    },
+    stop() {
+      clearInterval(this.intervalId);
     }
-  </style>
-</head>
-<body>
-  <h1>BLAST FIELD</h1>
-  <p id="gameModeText">GAME OBJECTIVE: REACH THE FLAG WITHIN 10 SECONDS WHILE AVOIDING HIDDEN BOMBS</p>
-  <button class="button" id="singlePlayerBtn">Play</button>
-  <button class="button exit-button" id="exitBtn">Exit</button>
-  <button class="button exit-button" id="startBtn">Start</button>
+  };
 
-  <div class="board-container">
-    <div class="player-board">
-      <h2 class="player-label">PLAYER 1</h2>
-      <div class="board">
-        <!-- Player 1 board goes here -->
-      </div>
-      <div class="timer" id="player1Timer"></div>
-      <div class="hearts" id="player1Hearts">❤️ ❤️ ❤️</div>
-    </div>
-  </div>
+  return timer;
+}
 
-  <script src="function.js"></script>
-</body>
-</html>
+function showTimeUpMessage() {
+  alert('Time is up! Game over.');
+}
+
+function showGameOverMessage() {
+  alert('You have lost all your lives. Game over.');
+}
+
+function resetPlayerTimer(element) {
+  element.textContent = 'Time: 0s';
+}
+
+function restartGame() {
+  // Logic to restart the game
+}
