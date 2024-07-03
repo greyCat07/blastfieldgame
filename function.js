@@ -1,12 +1,3 @@
-// Ensure `remainingLives` is defined and accessible
-const remainingLives = {
-  1: 3, // Player 1 initial lives
-  // Add more players if necessary
-};
-
-let gameStarted = false;
-let currentPlayer = 1;
-
 // Function to create a timer
 function createTimer(element) {
   let startTime = Date.now();
@@ -14,7 +5,7 @@ function createTimer(element) {
   function update() {
     const elapsedTime = Date.now() - startTime;
     const seconds = Math.floor(elapsedTime / 1000);
-    element.textContent = `Time: ${seconds}s`;
+    element.textContent = Time: ${seconds}s;
 
     // Check if the time limit has been reached
     if (seconds >= 10) { // Adjust the time limit as needed
@@ -51,22 +42,4 @@ function createTimer(element) {
   };
 
   return timer;
-}
-
-// Define showTimeUpMessage, updatePlayerBoardVisibility, resetPlayerTimer, and restartGame functions
-function showTimeUpMessage() {
-  alert("Time's up!");
-}
-
-function updatePlayerBoardVisibility() {
-  // Implementation to show/hide player boards based on game state
-}
-
-function resetPlayerTimer() {
-  document.getElementById('player1Timer').textContent = 'Time: 0s';
-}
-
-function restartGame() {
-  remainingLives[currentPlayer] = 3; // Reset lives for the player
-  // Additional logic to reset the game state
 }
