@@ -12,11 +12,11 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-    
+
     h1 {
       color: #ffffff;
     }
-    
+
     .button {
       display: inline-block;
       margin: 10px;
@@ -31,28 +31,28 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    
+
     .button:hover {
       background-color: #45a049;
     }
-    
+
     .board-container {
       display: flex;
       justify-content: center;
     }
-    
+
     .player-board {
       margin: 20px;
       display: none;
       position: relative;
     }
-    
+
     .player-label {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-    
+
     .timer {
       font-size: 16px;
       margin-bottom: 5px;
@@ -60,19 +60,19 @@
       left: 10px;
       text-align: left;
     }
-    
+
     .hearts {
       font-size: 18px;
       position: absolute;
       right: 10px;
       text-align: right;
-      color: red;
+      color: red; /* Added color style for heart sign */
     }
-    
+
     .board-row {
       display: flex;
     }
-    
+
     .board-cell {
       width: 50px;
       height: 50px;
@@ -80,16 +80,16 @@
       margin: 2px;
       background-color: #fff;
     }
-    
+
     .board-info {
       margin-top: 10px;
     }
-    
+
     .start-cell {
       background-image: url('player.png');
       background-size: cover;
     }
-    
+
     .flag-cell {
       background-image: url('flag.png');
       background-size: cover;
@@ -119,7 +119,7 @@
         <!-- Player 1 board goes here -->
       </div>
       <div class="timer" id="player1Timer"></div>
-      <div class="hearts" id="player1Hearts">❤️ ❤️ ❤️</div>
+      <div class="hearts">❤️ ❤️ ❤️</div>
     </div>
   </div>
 
