@@ -1,27 +1,13 @@
+// Ensure `remainingLives` is defined and accessible
+const remainingLives = {
+  1: 3, // Player 1 initial lives
+  // Add more players if necessary
+};
+
 let gameStarted = false;
 let currentPlayer = 1;
-let remainingLives = [0, 3]; // Index 0 is unused
 
-document.getElementById('singlePlayerBtn').addEventListener('click', startGame);
-
-function startGame() {
-  gameStarted = true;
-  currentPlayer = 1;
-  updatePlayerBoardVisibility();
-  const player1TimerElement = document.getElementById('player1Timer');
-  const player1Timer = createTimer(player1TimerElement);
-  player1Timer.start();
-}
-
-function updatePlayerBoardVisibility() {
-  const playerBoard = document.querySelector('.player-board');
-  if (gameStarted) {
-    playerBoard.style.display = 'block';
-  } else {
-    playerBoard.style.display = 'none';
-  }
-}
-
+// Function to create a timer
 function createTimer(element) {
   let startTime = Date.now();
 
@@ -30,28 +16,31 @@ function createTimer(element) {
     const seconds = Math.floor(elapsedTime / 1000);
     element.textContent = `Time: ${seconds}s`;
 
-    if (seconds >= 10) {
+    // Check if the time limit has been reached
+    if (seconds >= 10) { // Adjust the time limit as needed
       gameStarted = false;
       currentPlayer = 1;
       showTimeUpMessage();
       updatePlayerBoardVisibility();
-      resetPlayerTimer(element);
+      resetPlayerTimer();
       restartGame();
-      return;
+      return; // Exit the function to prevent further execution
     }
 
+    // Check if the current player has lost all lives
     if (remainingLives[currentPlayer] <= 0) {
       gameStarted = false;
       showGameOverMessage();
       updatePlayerBoardVisibility();
-      resetPlayerTimer(element);
+      resetPlayerTimer();
       restartGame();
-      return;
+      return; // Exit the function to prevent further execution
     }
   }
 
   const timer = {
     start() {
+      // Update the start time
       startTime = Date.now();
       update();
       this.intervalId = setInterval(update, 1000);
@@ -64,18 +53,20 @@ function createTimer(element) {
   return timer;
 }
 
+// Define showTimeUpMessage, updatePlayerBoardVisibility, resetPlayerTimer, and restartGame functions
 function showTimeUpMessage() {
-  alert('Time is up! Game over.');
+  alert("Time's up!");
 }
 
-function showGameOverMessage() {
-  alert('You have lost all your lives. Game over.');
+function updatePlayerBoardVisibility() {
+  // Implementation to show/hide player boards based on game state
 }
 
-function resetPlayerTimer(element) {
-  element.textContent = 'Time: 0s';
+function resetPlayerTimer() {
+  document.getElementById('player1Timer').textContent = 'Time: 0s';
 }
 
 function restartGame() {
-  // Logic to restart the game
+  remainingLives[currentPlayer] = 3; // Reset lives for the player
+  // Additional logic to reset the game state
 }
