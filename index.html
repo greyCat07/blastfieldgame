@@ -2,28 +2,27 @@
 <html>
 <head>
   <title>BLAST FIELD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
       color: #ffffff;
       text-align: center;
-      background-image: url(backgroudblast.png);
+      background-image: url('backgroundblast.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
     }
-    
+
     h1 {
       color: #ffffff;
     }
-    
+
     .button {
       display: inline-block;
       margin: 10px;
       padding: 10px 20px;
       font-size: 18px;
-      text-align: center;
-      text-decoration: none;
       background-color: #4CAF50;
       color: #fff;
       border: none;
@@ -31,47 +30,46 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    
+
     .button:hover {
       background-color: #45a049;
     }
-    
+
     .board-container {
       display: flex;
       justify-content: center;
     }
-    
+
     .player-board {
       margin: 20px;
-      display: none;
       position: relative;
     }
-    
+
     .player-label {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-    
+
     .timer {
       font-size: 16px;
-      margin-bottom: 5px;
       position: absolute;
       left: 10px;
       text-align: left;
     }
-    
+
     .hearts {
       font-size: 18px;
       position: absolute;
       right: 10px;
       text-align: right;
+      color: red;
     }
-    
+
     .board-row {
       display: flex;
     }
-    
+
     .board-cell {
       width: 50px;
       height: 50px;
@@ -79,16 +77,12 @@
       margin: 2px;
       background-color: #fff;
     }
-    
-    .board-info {
-      margin-top: 10px;
-    }
-    
+
     .start-cell {
       background-image: url('player.png');
       background-size: cover;
     }
-    
+
     .flag-cell {
       background-image: url('flag.png');
       background-size: cover;
@@ -102,14 +96,6 @@
     .exit-button {
       display: none;
     }
-
-    .hearts {
-      font-size: 18px;
-      position: absolute;
-      right: 10px;
-      text-align: right;
-      color: red; /* Added color style for heart sign */
-    }
   </style>
 </head>
 <body>
@@ -122,15 +108,12 @@
   <div class="board-container">
     <div class="player-board">
       <h2 class="player-label">PLAYER 1</h2>
-      <div class="board">
-        <!-- Player 1 board goes here -->
-      </div>
+      <div class="board" id="gameBoard"></div>
       <div class="timer" id="player1Timer"></div>
-      <div class="hearts">❤️ ❤️ ❤️</div>
+      <div class="hearts" id="player1Hearts">❤️ ❤️ ❤️</div>
     </div>
   </div>
-    
 
-  <script src="function.js"></script>
+  <script src="blastfield.js"></script>
 </body>
 </html>
