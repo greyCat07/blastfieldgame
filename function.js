@@ -5,6 +5,7 @@ const heartsDisplay = document.getElementById('player1Hearts');
 const startBtn = document.getElementById('startBtn');
 const singlePlayerBtn = document.getElementById('singlePlayerBtn');
 const exitBtn = document.getElementById('exitBtn');
+const restartBtn = document.getElementById('restartBtn');
 
 let playerPosition = { row: 0, col: 0 };
 let flagPosition = { row: boardSize - 1, col: boardSize - 1 };
@@ -68,6 +69,8 @@ function startGame() {
   gameStarted = true;
   startTimer();
   document.addEventListener('keydown', handleMovement);
+  restartBtn.style.display = 'none';
+  startBtn.style.display = 'none';
 }
 
 function handleMovement(event) {
@@ -117,6 +120,7 @@ function endGame() {
   gameStarted = false;
   clearInterval(timerInterval);
   document.removeEventListener('keydown', handleMovement);
+  restartBtn.style.display = 'inline-block';
 }
 
 singlePlayerBtn.addEventListener('click', () => {
@@ -131,4 +135,8 @@ startBtn.addEventListener('click', () => {
 
 exitBtn.addEventListener('click', () => {
   location.reload();
+});
+
+restartBtn.addEventListener('click', () => {
+  startGame();
 });
