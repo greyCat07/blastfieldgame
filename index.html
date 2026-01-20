@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       color: #ffffff;
       text-align: center;
-      background-image: url('backgroundblast.png');
+      background-image: url('backgroudblast.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -100,10 +100,11 @@
 </head>
 <body>
   <h1>BLAST FIELD</h1>
-  <p id="gameModeText">GAME OBJECTIVE: REACH THE FLAG WITHIN 10 SECONDS WHILE AVOIDING HIDDEN BOMB</p>
+  <p id="gameModeText">GAME OBJECTIVE: REACH THE FLAG WITHIN 10 SECONDS WHILE AVOIDING HIDDEN BOMBS</p>
   <button class="button" id="singlePlayerBtn">Play</button>
   <button class="button exit-button" id="exitBtn">Exit</button>
   <button class="button exit-button" id="startBtn">Start</button>
+  <button class="button" id="restartBtn" style="display: none;">Restart</button>
 
   <div class="board-container">
     <div class="player-board">
@@ -114,6 +115,6 @@
     </div>
   </div>
 
-  <script src="blastfield.js"></script>
+  <script src="function.js"></script>
 </body>
 </html>
