@@ -1,69 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BLAST FIELD</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLAST FIELD</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #ffffff;
       text-align: center;
-      background-image: url('backgroudblast.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+      background: #121214 url('backgroundblast.png') no-repeat center center/cover;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-container {
+      background: rgba(20, 20, 25, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      max-width: 400px;
+      width: 90%;
     }
 
     h1 {
-      color: #ffffff;
+      margin-top: 0;
+      letter-spacing: 2px;
+      color: #ff4757;
+      text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+    }
+
+    #gameModeText {
+      font-size: 14px;
+      color: #a4b0be;
+      margin-bottom: 20px;
     }
 
     .button {
       display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 18px;
-      background-color: #4CAF50;
+      margin: 8px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #2ed573;
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     .button:hover {
-      background-color: #45a049;
+      background-color: #26af5f;
+      transform: translateY(-2px);
     }
+
+    .button.exit { background-color: #ff4757; }
+    .button.exit:hover { background-color: #e0404e; }
+    .button.start { background-color: #1e90ff; }
+    .button.start:hover { background-color: #1c82e6; }
 
     .board-container {
       display: flex;
       justify-content: center;
+      margin-top: 15px;
     }
 
     .player-board {
-      margin: 20px;
       position: relative;
+      width: 100%;
     }
 
-    .player-label {
-      font-size: 20px;
+    .meta-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
       font-weight: bold;
-      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 12px;
+      border-radius: 6px;
     }
 
-    .timer {
-      font-size: 16px;
-      position: absolute;
-      left: 10px;
-      text-align: left;
-    }
+    .timer { color: #ffa502; font-size: 18px; }
+    .hearts { color: #ff4757; font-size: 18px; letter-spacing: 2px; }
 
-    .hearts {
-      font-size: 18px;
-      position: absolute;
-      right: 10px;
-      text-align: right;
-      color: red;
+    .board {
+      display: inline-block;
+      background: #2f3542;
+      padding: 6px;
+      border-radius: 8px;
     }
 
     .board-row {
@@ -71,47 +104,78 @@
     }
 
     .board-cell {
-      width: 50px;
-      height: 50px;
-      border: 1px solid #ffffff;
-      margin: 2px;
-      background-color: #fff;
+      width: 54px;
+      height: 54px;
+      border-radius: 4px;
+      margin: 3px;
+      background-color: #57606f;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      background-size: cover;
+      background-position: center;
     }
 
+    /* Fallbacks if local images are missing */
     .start-cell {
+      background-color: #1e90ff;
       background-image: url('player.png');
-      background-size: cover;
+      box-shadow: 0 0 8px #1e90ff;
+      transform: scale(0.95);
     }
 
     .flag-cell {
+      background-color: #ffa502;
       background-image: url('flag.png');
-      background-size: cover;
     }
 
     .bomb-cell {
+      background-color: #ff4757;
       background-image: url('bomb.png');
-      background-size: cover;
+      animation: shake 0.2s ease-in-out;
     }
 
-    .exit-button {
-      display: none;
+    .status-message {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      min-height: 30px;
+    }
+    
+    .win-text { color: #2ed573; }
+    .lose-text { color: #ff4757; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
     }
   </style>
 </head>
 <body>
-  <h1>BLAST FIELD</h1>
-  <p id="gameModeText">GAME OBJECTIVE: REACH THE FLAG WITHIN 10 SECONDS WHILE AVOIDING HIDDEN BOMBS</p>
-  <button class="button" id="singlePlayerBtn">Play</button>
-  <button class="button exit-button" id="exitBtn">Exit</button>
-  <button class="button exit-button" id="startBtn">Start</button>
-  <button class="button" id="restartBtn" style="display: none;">Restart</button>
 
-  <div class="board-container">
-    <div class="player-board">
-      <h2 class="player-label">PLAYER 1</h2>
-      <div class="board" id="gameBoard"></div>
-      <div class="timer" id="player1Timer"></div>
-      <div class="hearts" id="player1Hearts">❤️ ❤️ ❤️</div>
+  <div class="game-container">
+    <h1>BLAST FIELD</h1>
+    <p id="gameModeText">REACH THE FLAG IN 10 SECONDS. AVOID THE HIDDEN BOMBS!</p>
+    
+    <div id="menuControls">
+      <button class="button" id="singlePlayerBtn">Play Game</button>
+    </div>
+    
+    <div id="gameControls" style="display: none;">
+      <button class="button start" id="startBtn">Start Mission</button>
+      <button class="button exit" id="exitBtn">Exit</button>
+    </div>
+    <button class="button start" id="restartBtn" style="display: none;">Play Again</button>
+
+    <div class="status-message" id="statusMessage"></div>
+
+    <div class="board-container" id="boardWrapper" style="display: none;">
+      <div class="player-board">
+        <div class="meta-panel">
+          <div class="timer" id="player1Timer">Time: 10s</div>
+          <div class="hearts" id="player1Hearts">❤️ ❤️ ❤️</div>
+        </div>
+        <div class="board" id="gameBoard"></div>
+      </div>
     </div>
   </div>
 
